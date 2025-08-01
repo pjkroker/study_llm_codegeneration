@@ -1,0 +1,22 @@
+docker build -f Dockerfile.Ubuntu --platform=linux/amd64 -t cot-selvevolve-ubuntu .
+
+docker build --platform=linux/amd64 -t cot-selvevolve .
+
+docker run -it --platform=linux/amd64 --env-file .env cot-selvevolve bash
+docker run -it --platform=linux/amd64 --env-file .env cot-selvevolve-ubuntu bash
+
+
+docker exec -it cot-selvevolve bash
+
+poetry run python main.py \
+  --experiment_name test_gpt4o \
+  --sampling_fraction 0.1 \
+  --initial_strategy ZEROSHOT \
+  --correction_strategy ZEROSHOT \
+  --initial_model gpt-4o-mini-2024-07-1 \
+  --correction_model gpt-4o-mini-2024-07-1 \
+  --temperature 0.7 \
+  --top_p 1.0 \
+  --self_correction \
+  --max_self_correction_attempts 2 \
+  --demo
