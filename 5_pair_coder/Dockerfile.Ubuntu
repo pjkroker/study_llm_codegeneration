@@ -54,3 +54,5 @@ RUN conda run -n PairCoder pip install -r requirements.txt
 RUN wget -O dataset.zip https://github.com/nju-websoft/PairCoder/releases/download/v0.1.0/dataset.zip
 # Unzip the dataset folder inside the project root
 RUN unzip dataset.zip && rm dataset.zip
+
+COPY configuration.toml /app/settings/configuration.toml

@@ -4,4 +4,7 @@ docker build -f Dockerfile.Ubuntu --platform=linux/amd64 -t pair-coder-ubuntu .
 docker run -it --platform=linux/amd64 --env-file .env pair-coder-ubuntu bash
 
 
-docker exec -it cot-selvevolve bash
+conda run -n PairCoder python src/solve_dataset.py \
+    --dataset_name mbpp \
+    --split_name test \
+    --dir_path results
