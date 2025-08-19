@@ -1,0 +1,7 @@
+docker build -f dockerfile --platform=linux/amd64 -t ldb-ubuntu .
+
+docker run -it --platform=linux/amd64 ldb-ubuntu bash
+
+conda run -n ldb ./run_simple.sh humaneval gpt-4o-mini-2024-07-18 /app/out
+
+

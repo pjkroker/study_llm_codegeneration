@@ -1,0 +1,9 @@
+docker build -f dockerfile --platform=linux/amd64 -t open-code-interpreter-ubuntu .
+
+docker run -it --platform=linux/amd64 open-code-interpreter-ubuntu bash
+
+export HF_TOKEN="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"
+
+conda run -n demo python3 /app/demo/chatbot.py --path "m-a-p/OpenCodeInterpreter-DS-6.7B"
+
+

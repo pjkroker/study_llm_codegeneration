@@ -1,0 +1,51 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install common tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    unzip \
+    vim \
+    wget \
+    nano \
+    net-tools \
+    iputils-ping \
+    dnsutils \
+    build-essential \
+    software-properties-common
+
+# Install Python 3.10 from deadsnakes
+RUN apt-get update && apt-get install -y \
+    software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install -y python3.10 python3.10-venv python3.10-dev python3-pip
+
+RUN ln -s /usr/bin/python3.10 /usr/bin/python
+
+# Set working dir
+WORKDIR /app
+
+# Install Miniconda
+RUN mkdir -p ~/miniconda3
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+RUN bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+RUN rm ~/miniconda3/miniconda.sh
+
+# Refresh terminal
+ENV PATH="/root/miniconda3/bin:$PATH"
+
+# accept conda terms of service
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+
+# clone repo
+RUN git clone https://github.com/OpenCodeInterpreter/OpenCodeInterpreter.git .
+
+# Install OpenCodeInterpreter
+# Create environment with Python 3.10
+RUN conda create -n demo python=3.10 -y
+# Install pip requirements inside the ldb environment
+RUN conda run -n demo pip install -r /app/demo/requirements.txt

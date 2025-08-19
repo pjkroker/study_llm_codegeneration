@@ -1,0 +1,43 @@
+# Start from Ubuntu base image
+FROM ubuntu:22.04
+
+# Set environment variables for non-interactive installs
+ENV DEBIAN_FRONTEND=noninteractive
+
+# --- STEP 1: Install dependencies ---
+RUN apt-get update && \
+    apt-get install -y \
+    openjdk-17-jdk \
+    wget \
+    curl \
+    git \
+    unzip \
+    xvfb \
+    libxext6 \
+    libxrender1 \
+    libxtst6 \
+    ca-certificates \
+    gnupg \
+    software-properties-common
+
+# Set JAVA_HOME and update PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:$PATH"
+
+# --- STEP 2: Install Gradle manually (change version as needed) ---
+ENV GRADLE_VERSION=8.5
+
+RUN wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -P /tmp && \
+    unzip -d /opt/gradle /tmp/gradle-${GRADLE_VERSION}-bin.zip && \
+    ln -s /opt/gradle/gradle-${GRADLE_VERSION} /opt/gradle/latest
+
+ENV PATH="/opt/gradle/latest/bin:$PATH"
+
+# --- STEP 3: Create workspace ---
+WORKDIR /app
+
+# --- STEP 4: Copy your TestSpark source code into the container ---
+RUN git clone https://github.com/JetBrains-Research/TestSpark.git .
+
+# --- STEP 5: Build TestSpark ---
+RUN gradle buildPlugin
