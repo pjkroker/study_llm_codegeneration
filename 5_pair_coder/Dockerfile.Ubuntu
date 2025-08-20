@@ -48,6 +48,7 @@ RUN git clone https://github.com/nju-websoft/PairCoder.git .
 # Create environment with Python 3.10
 RUN conda create -n PairCoder python=3.10 -y
 # Install pip requirements inside the PairCoder environment
+COPY requirements.txt /app
 RUN conda run -n PairCoder pip install -r requirements.txt
 
 # Download dataset archive
@@ -55,4 +56,5 @@ RUN wget -O dataset.zip https://github.com/nju-websoft/PairCoder/releases/downlo
 # Unzip the dataset folder inside the project root
 RUN unzip dataset.zip && rm dataset.zip
 
-COPY configuration.toml /app/settings/configuration.toml
+#copy config file into the container
+COPY configuration.toml /app/src/settings/configuration.toml
