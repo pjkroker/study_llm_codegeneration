@@ -1,3 +1,8 @@
 **/.env
 **/configuration.toml
 **/.secrets.toml
+**/venv
+**/.venv
+.idea
+**/.DS_Store
+**/hf_key.txt
