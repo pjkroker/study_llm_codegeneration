@@ -36,6 +36,35 @@ proc = run_async("conda", ["run", "-n", "opencode", "python3", "./OpenCodeInterp
 logging.info(f"Server started (PID:{proc.pid}")
 # Python continues running here...
 logging.info("---test server connection---")
+import time
+import requests
+
+URL = "http://127.0.0.1:7860/info"   # your server's health endpoint
+EXPECTED_STATUS = 200                # wait until we get this
+TIMEOUT = 180                        # max seconds to wait
+SLEEP = 1                            # poll every 1 second
+
+start = time.time()
+while True:
+    try:
+        resp = requests.get(URL, timeout=2)
+        if resp.status_code == EXPECTED_STATUS:
+            print("✅ Server is ready!")
+            break
+        else:
+            print(f"Got {resp.status_code}, waiting...")
+    except requests.RequestException as e:
+        print(f"Connection failed: {e}, retrying...")
+
+    if time.time() - start > TIMEOUT:
+        raise TimeoutError(f"Server did not reach {EXPECTED_STATUS} within {TIMEOUT}s")
+
+    time.sleep(SLEEP)
+
+
+
+
+
 # stdout, stderr = proc.communicate()
 # logging.debug(stdout)
 # logging.debug(stderr)
