@@ -1,7 +1,7 @@
 import logging
 import os
 
-from src.subproccess_helper import run_shell
+from subproccess_helper import run_shell
 
 #from docker_helper import DockerHelper
 #from subproccess_helper import run, run_shell
@@ -22,7 +22,7 @@ logging.info("---starting set up script---")
 result = run_shell(f"./setup.sh", shell=True)
 logging.debug(result["stdout"])
 logging.info("---start server---")
-from src.subproccess_helper import run_async
+from subproccess_helper import run_async
 
 proc = run_async("conda", ["run", "-n", "opencode", "python3", "../10_open_code_interpreter/OpenCodeInterpreter/demo/chatbot.py",
                            "--path", "m-a-p/OpenCodeInterpreter-DS-6.7B"])
