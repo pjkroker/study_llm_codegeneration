@@ -9,3 +9,5 @@
 src/log
 10_open_code_interpreter/OpenCodeInterpreter/
 **/log
+**/out
+/src/__pycache__

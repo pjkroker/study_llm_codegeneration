@@ -41,3 +41,7 @@ pip install -r requirements.txt
 
 #TODO pin to gpu
 
+# TODO set hf api key
+
+
+

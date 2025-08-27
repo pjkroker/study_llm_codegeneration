@@ -55,3 +55,16 @@ def run_shell(command, shell=False):
         "returncode": proc.returncode,
         "pid": proc.pid
     }
+
+def run_async(command, args):
+    """
+    Launches a subprocess asynchronously (non-blocking).
+    Returns the Popen object so the caller can manage it.
+    """
+    proc = subprocess.Popen(
+        [command] + args,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+    return proc

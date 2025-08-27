@@ -22,7 +22,13 @@ logging.info("---starting set up script---")
 result = run_shell(f"./setup.sh", shell=True)
 logging.debug(result["stdout"])
 logging.info("---start server---")
+from src.subproccess_helper import run_async
 
+proc = run_async("conda", ["run", "-n", "opencode", "python3", "../10_open_code_interpreter/OpenCodeInterpreter/demo/chatbot.py",
+                           "--path", "m-a-p/OpenCodeInterpreter-DS-6.7B"])
+
+print("✅ Server started (PID:", proc.pid, ")")
+# Python continues running here...
 logging.info("---test server connection---")
 import io
 import logging
