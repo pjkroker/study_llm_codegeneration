@@ -23,6 +23,10 @@ result = run_shell(f"../10_open_code_interpreter/setup.sh", shell=True)
 logging.debug(result["stdout"])
 logging.debug(result["stderr"])
 logging.info("---start server---")
+
+run_shell(f"mkdir -p ~/tmp/gradio ~/tmp/gradio", shell=True)
+os.environ["TMPDIR"] = "~/tmp"
+os.environ["GRADIO_TEMP_DIR"] = "~/tmp/gradio"
 os.environ["HF_TOKEN"] = "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" #TODO remove this!!
 from subproccess_helper import run_async
 # TODO fix paths
