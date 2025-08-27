@@ -1,0 +1,142 @@
+2025-08-27 15:01:05,655 - DEBUG - ---Starting Setup---
+2025-08-27 15:01:05,655 - INFO - ---10. OpenCodeInterpreter---
+2025-08-27 15:01:05,655 - INFO - test server connection
+2025-08-27 15:01:05,852 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=5.0 socket_options=None
+2025-08-27 15:01:06,090 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x102a49520>
+2025-08-27 15:01:06,090 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x103117550> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=5.0
+2025-08-27 15:01:06,459 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10220cad0>
+2025-08-27 15:01:06,459 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:06,460 - DEBUG - send_request_headers.complete
+2025-08-27 15:01:06,460 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:01:06,460 - DEBUG - send_request_body.complete
+2025-08-27 15:01:06,460 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:06,997 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:01:06 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'15261'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:01:06,998 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/config "HTTP/1.1 200 OK"
+2025-08-27 15:01:06,999 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-27 15:01:07,178 - DEBUG - receive_response_body.complete
+2025-08-27 15:01:07,178 - DEBUG - response_closed.started
+2025-08-27 15:01:07,178 - DEBUG - response_closed.complete
+2025-08-27 15:01:07,179 - DEBUG - close.started
+2025-08-27 15:01:07,179 - DEBUG - close.complete
+2025-08-27 15:01:07,221 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=5.0 socket_options=None
+2025-08-27 15:01:07,407 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1031820f0>
+2025-08-27 15:01:07,407 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x10317fad0> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=5.0
+2025-08-27 15:01:07,777 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x103182000>
+2025-08-27 15:01:07,777 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:07,778 - DEBUG - send_request_headers.complete
+2025-08-27 15:01:07,778 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:01:07,778 - DEBUG - send_request_body.complete
+2025-08-27 15:01:07,779 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:08,146 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:01:08 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'6333'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:01:08,147 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/gradio_api/info?serialize=False "HTTP/1.1 200 OK"
+2025-08-27 15:01:08,148 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-27 15:01:08,148 - DEBUG - receive_response_body.complete
+2025-08-27 15:01:08,148 - DEBUG - response_closed.started
+2025-08-27 15:01:08,148 - DEBUG - response_closed.complete
+2025-08-27 15:01:08,148 - DEBUG - close.started
+2025-08-27 15:01:08,149 - DEBUG - close.complete
+2025-08-27 15:01:08,151 - INFO - Gradio API Info:
+Client.predict() Usage Info
+---------------------------
+Named API endpoints: 4
+
+ - predict(api_name="/update_uuid") -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(user_message, api_name="/partial") -> opencodeinterpreter
+    Parameters:
+     - [Textbox] user_message: str (required)  
+    Returns:
+     - [Chatbot] opencodeinterpreter: tuple[str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None, str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None] 
+
+ - predict(api_name="/reset_textbox") -> message
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] message: str 
+
+ - predict(api_name="/partial_1") -> opencodeinterpreter
+    Parameters:
+     - None
+    Returns:
+     - [Chatbot] opencodeinterpreter: tuple[str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None, str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None] 
+
+
+2025-08-27 15:01:08,153 - INFO - generating code
+2025-08-27 15:01:08,157 - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-27 15:01:08,202 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=20 socket_options=None
+2025-08-27 15:01:08,203 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=5.0 socket_options=None
+2025-08-27 15:01:08,347 - DEBUG - https://huggingface.co:443 "HEAD /api/telemetry/py_client/initiated HTTP/1.1" 200 0
+2025-08-27 15:01:08,388 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1013adb50>
+2025-08-27 15:01:08,388 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x101fd72f0>
+2025-08-27 15:01:08,388 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x1031a4050> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=5.0
+2025-08-27 15:01:08,388 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x103193dd0> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=20
+2025-08-27 15:01:08,760 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10303b9b0>
+2025-08-27 15:01:08,760 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:08,761 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1011d7b60>
+2025-08-27 15:01:08,761 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-08-27 15:01:08,761 - DEBUG - send_request_headers.complete
+2025-08-27 15:01:08,762 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:01:08,762 - DEBUG - send_request_headers.complete
+2025-08-27 15:01:08,762 - DEBUG - send_request_body.complete
+2025-08-27 15:01:08,762 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-08-27 15:01:08,762 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:08,763 - DEBUG - send_request_body.complete
+2025-08-27 15:01:08,763 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-08-27 15:01:09,431 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:01:09 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'47'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:01:09,432 - INFO - HTTP Request: POST https://22ebc1c4fb3274abc1.gradio.live/gradio_api/queue/join "HTTP/1.1 200 OK"
+2025-08-27 15:01:09,432 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-08-27 15:01:09,432 - DEBUG - receive_response_body.complete
+2025-08-27 15:01:09,432 - DEBUG - response_closed.started
+2025-08-27 15:01:09,432 - DEBUG - response_closed.complete
+2025-08-27 15:01:09,432 - DEBUG - close.started
+2025-08-27 15:01:09,433 - DEBUG - close.complete
+2025-08-27 15:01:09,471 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=None socket_options=None
+2025-08-27 15:01:09,507 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:01:09 GMT'), (b'Content-Type', b'text/event-stream; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:01:09,507 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/gradio_api/heartbeat/c8d28a6a-8ca9-4fac-a851-72e34161c5e6 "HTTP/1.1 200 OK"
+2025-08-27 15:01:09,507 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-27 15:01:09,657 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10319ab40>
+2025-08-27 15:01:09,657 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x1031a57d0> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=None
+2025-08-27 15:01:10,029 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10319aa50>
+2025-08-27 15:01:10,029 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:10,030 - DEBUG - send_request_headers.complete
+2025-08-27 15:01:10,030 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:01:10,030 - DEBUG - send_request_body.complete
+2025-08-27 15:01:10,030 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:01:14,894 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:01:14 GMT'), (b'Content-Type', b'text/event-stream; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:01:14,895 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/gradio_api/queue/data?session_hash=c8d28a6a-8ca9-4fac-a851-72e34161c5e6 "HTTP/1.1 200 OK"
+2025-08-27 15:01:14,895 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-27 15:02:27,844 - DEBUG - receive_response_body.failed exception=GeneratorExit()
+2025-08-27 15:02:27,844 - DEBUG - response_closed.started
+2025-08-27 15:02:27,845 - DEBUG - response_closed.complete
+2025-08-27 15:02:27,857 - INFO - code generated successfully
+2025-08-27 15:02:27,858 - INFO - [['Give me a program that computes the first 100 prime numbers', 'Here is a Python program that computes the first 100 prime numbers:\n\n```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef get_primes(count):\n    primes = []\n    num = 2\n    while len(primes) < count:\n        if is_prime(num):\n            primes.append(num)\n        num += 1\n    return primes\n\nprimes = get_primes(100)\nprint(primes)\n```\n\nThis program uses a helper function `is_prime()` to check if a number is prime. It then uses another function `get_primes()` to generate the first 100 prime numbers. The `get_primes()` function uses a while loop to keep generating prime numbers until it has found the desired number of primes. Finally, it prints the list of the first 100 prime numbers.'], ['Execution result: \n[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541]', 'The first 100 prime numbers are:\n\n[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541]\n\nThese numbers are generated by the program using the `is_prime()` function to check if each number is prime. The `get_primes()` function keeps generating prime numbers until it has found the desired number of primes.']]
+2025-08-27 15:02:27,860 - INFO - def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def get_primes(count):
+    primes = []
+    num = 2
+    while len(primes) < count:
+        if is_prime(num):
+            primes.append(num)
+        num += 1
+    return primes
+
+primes = get_primes(100)
+print(primes)
+2025-08-27 15:02:27,860 - INFO - Code saved to primes.py

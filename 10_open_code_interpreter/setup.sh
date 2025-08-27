@@ -36,3 +36,6 @@ conda activate "$CONDA_ENV"
 # ----------------------------
 echo "Schritt 4"
 pip install -r requirements.txt
+
+# check tmp environemt variable
+
