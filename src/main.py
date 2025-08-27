@@ -24,8 +24,8 @@ logging.debug(result["stdout"])
 logging.debug(result["stderr"])
 logging.info("---start server---")
 from subproccess_helper import run_async
-
-proc = run_async("conda", ["run", "-n", "opencode", "python3", "../10_open_code_interpreter/OpenCodeInterpreter/demo/chatbot.py",
+# TODO fix paths
+proc = run_async("conda", ["run", "-n", "opencode", "python3", "./OpenCodeInterpreter/demo/chatbot.py",
                            "--path", "m-a-p/OpenCodeInterpreter-DS-6.7B"])
 
 logging.info(f"Server started (PID:{proc.pid}")
