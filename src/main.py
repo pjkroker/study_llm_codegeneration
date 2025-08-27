@@ -21,6 +21,7 @@ logging.info("---10. OpenCodeInterpreter---")
 logging.info("---starting set up script---")
 result = run_shell(f"./setup.sh", shell=True)
 logging.debug(result["stdout"])
+logging.debug(result["sterr"])
 logging.info("---start server---")
 from subproccess_helper import run_async
 
