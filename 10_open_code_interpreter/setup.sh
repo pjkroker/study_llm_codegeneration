@@ -35,7 +35,7 @@ conda activate "$CONDA_ENV"
 # 4. Install Python dependencies
 # ----------------------------
 echo "Schritt 4"
-pip install -r ../10_open_code_interpreter/requirements.txt
+pip install -r ../10_open_code_interpreter/req2.txt
 
 
 # TODO check tmp environemt variable
