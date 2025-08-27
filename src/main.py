@@ -28,9 +28,12 @@ from subproccess_helper import run_async
 proc = run_async("conda", ["run", "-n", "opencode", "python3", "../10_open_code_interpreter/OpenCodeInterpreter/demo/chatbot.py",
                            "--path", "m-a-p/OpenCodeInterpreter-DS-6.7B"])
 
-print("✅ Server started (PID:", proc.pid, ")")
+logging.info(f"Server started (PID:{proc.pid}")
 # Python continues running here...
 logging.info("---test server connection---")
+stdout, stderr = proc.communicate()
+logging.debug(stdout)
+logging.debug(stderr)
 import io
 import logging
 from contextlib import redirect_stdout
