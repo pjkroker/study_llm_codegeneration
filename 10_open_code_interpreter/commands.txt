@@ -7,3 +7,7 @@ export HF_TOKEN="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"
 conda run -n demo python3 /app/demo/chatbot.py --path "m-a-p/OpenCodeInterpreter-DS-6.7B"
 
 
+mkdir -p ~/tmp/gradio ~/tmp/gradio_cache
+export TMPDIR=~/tmp
+export GRADIO_TEMP_DIR=~/tmp/gradio
+export GRADIO_CACHE_DIR=~/tmp/gradio_cache

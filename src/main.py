@@ -36,15 +36,15 @@ proc = run_async("conda", ["run", "-n", "opencode", "python3", "./OpenCodeInterp
 logging.info(f"Server started (PID:{proc.pid}")
 # Python continues running here...
 logging.info("---test server connection---")
-stdout, stderr = proc.communicate()
-logging.debug(stdout)
-logging.debug(stderr)
+# stdout, stderr = proc.communicate()
+# logging.debug(stdout)
+# logging.debug(stderr)
 import io
 import logging
 from contextlib import redirect_stdout
 from gradio_client import Client
 
-client = Client("https://22ebc1c4fb3274abc1.gradio.live/")
+client = Client("http://127.0.0.1:7860")
 
 buf = io.StringIO()
 with redirect_stdout(buf):
