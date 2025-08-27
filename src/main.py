@@ -1,6 +1,7 @@
 import logging
 import os
 
+from src.subproccess_helper import run_shell
 
 #from docker_helper import DockerHelper
 #from subproccess_helper import run, run_shell
@@ -18,9 +19,11 @@ logging.basicConfig(
 logging.debug("---Starting Setup---")
 logging.info("---10. OpenCodeInterpreter---")
 logging.info("---starting set up script---")
+result = run_shell(f"./setup.sh", shell=True)
+logging.debug(result["stdout"])
+logging.info("---start server---")
 
-
-logging.info("test server connection")
+logging.info("---test server connection---")
 import io
 import logging
 from contextlib import redirect_stdout

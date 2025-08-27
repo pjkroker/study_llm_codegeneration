@@ -140,3 +140,117 @@ def get_primes(count):
 primes = get_primes(100)
 print(primes)
 2025-08-27 15:02:27,860 - INFO - Code saved to primes.py
+2025-08-27 15:17:53,099 - DEBUG - ---Starting Setup---
+2025-08-27 15:17:53,100 - INFO - ---10. OpenCodeInterpreter---
+2025-08-27 15:17:53,100 - INFO - ---starting set up script---
+2025-08-27 15:17:53,105 - DEBUG - 
+2025-08-27 15:17:53,105 - INFO - ---start server---
+2025-08-27 15:17:53,105 - INFO - ---test server connection---
+2025-08-27 15:17:53,326 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=5.0 socket_options=None
+2025-08-27 15:17:53,563 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107b0d6d0>
+2025-08-27 15:17:53,563 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x107c4b6d0> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=5.0
+2025-08-27 15:17:53,925 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107a6dd60>
+2025-08-27 15:17:53,926 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:17:53,926 - DEBUG - send_request_headers.complete
+2025-08-27 15:17:53,926 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:17:53,926 - DEBUG - send_request_body.complete
+2025-08-27 15:17:53,926 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:17:54,475 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:17:54 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'15261'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:17:54,477 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/config "HTTP/1.1 200 OK"
+2025-08-27 15:17:54,478 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-27 15:17:54,655 - DEBUG - receive_response_body.complete
+2025-08-27 15:17:54,655 - DEBUG - response_closed.started
+2025-08-27 15:17:54,655 - DEBUG - response_closed.complete
+2025-08-27 15:17:54,656 - DEBUG - close.started
+2025-08-27 15:17:54,656 - DEBUG - close.complete
+2025-08-27 15:17:54,698 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=5.0 socket_options=None
+2025-08-27 15:17:54,879 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107cae4b0>
+2025-08-27 15:17:54,880 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x107cb3c50> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=5.0
+2025-08-27 15:17:55,257 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107cae3c0>
+2025-08-27 15:17:55,257 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:17:55,258 - DEBUG - send_request_headers.complete
+2025-08-27 15:17:55,258 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:17:55,258 - DEBUG - send_request_body.complete
+2025-08-27 15:17:55,258 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:17:55,620 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:17:55 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'6333'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:17:55,621 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/gradio_api/info?serialize=False "HTTP/1.1 200 OK"
+2025-08-27 15:17:55,621 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-27 15:17:55,622 - DEBUG - receive_response_body.complete
+2025-08-27 15:17:55,622 - DEBUG - response_closed.started
+2025-08-27 15:17:55,622 - DEBUG - response_closed.complete
+2025-08-27 15:17:55,622 - DEBUG - close.started
+2025-08-27 15:17:55,623 - DEBUG - close.complete
+2025-08-27 15:17:55,626 - INFO - Gradio API Info:
+Client.predict() Usage Info
+---------------------------
+Named API endpoints: 4
+
+ - predict(api_name="/update_uuid") -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(user_message, api_name="/partial") -> opencodeinterpreter
+    Parameters:
+     - [Textbox] user_message: str (required)  
+    Returns:
+     - [Chatbot] opencodeinterpreter: tuple[str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None, str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None] 
+
+ - predict(api_name="/reset_textbox") -> message
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] message: str 
+
+ - predict(api_name="/partial_1") -> opencodeinterpreter
+    Parameters:
+     - None
+    Returns:
+     - [Chatbot] opencodeinterpreter: tuple[str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None, str | dict(file: filepath, alt_text: str | None) | dict(component: str, value: Any, constructor_args: dict(str, Any), props: dict(str, Any)) | None] 
+
+
+2025-08-27 15:17:55,628 - INFO - generating code
+2025-08-27 15:17:55,633 - DEBUG - Starting new HTTPS connection (1): huggingface.co:443
+2025-08-27 15:17:55,676 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=20 socket_options=None
+2025-08-27 15:17:55,676 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=5.0 socket_options=None
+2025-08-27 15:17:55,832 - DEBUG - https://huggingface.co:443 "HEAD /api/telemetry/py_client/initiated HTTP/1.1" 200 0
+2025-08-27 15:17:55,861 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107c1a4e0>
+2025-08-27 15:17:55,861 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x107cd00d0> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=20
+2025-08-27 15:17:55,863 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x106b32cf0>
+2025-08-27 15:17:55,863 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x107cd0150> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=5.0
+2025-08-27 15:17:56,227 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107b63680>
+2025-08-27 15:17:56,227 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:17:56,228 - DEBUG - send_request_headers.complete
+2025-08-27 15:17:56,228 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:17:56,228 - DEBUG - send_request_body.complete
+2025-08-27 15:17:56,228 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:17:56,233 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x104737590>
+2025-08-27 15:17:56,234 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2025-08-27 15:17:56,234 - DEBUG - send_request_headers.complete
+2025-08-27 15:17:56,234 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2025-08-27 15:17:56,234 - DEBUG - send_request_body.complete
+2025-08-27 15:17:56,234 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2025-08-27 15:17:56,589 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:17:56 GMT'), (b'Content-Type', b'text/event-stream; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:17:56,590 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/gradio_api/heartbeat/7170af5b-5171-4bbf-b9a9-9ab24355445e "HTTP/1.1 200 OK"
+2025-08-27 15:17:56,590 - DEBUG - receive_response_body.started request=<Request [b'GET']>
+2025-08-27 15:17:56,784 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:17:56 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'47'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:17:56,784 - INFO - HTTP Request: POST https://22ebc1c4fb3274abc1.gradio.live/gradio_api/queue/join "HTTP/1.1 200 OK"
+2025-08-27 15:17:56,785 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2025-08-27 15:17:56,785 - DEBUG - receive_response_body.complete
+2025-08-27 15:17:56,785 - DEBUG - response_closed.started
+2025-08-27 15:17:56,785 - DEBUG - response_closed.complete
+2025-08-27 15:17:56,785 - DEBUG - close.started
+2025-08-27 15:17:56,786 - DEBUG - close.complete
+2025-08-27 15:17:56,826 - DEBUG - connect_tcp.started host='22ebc1c4fb3274abc1.gradio.live' port=443 local_address=None timeout=None socket_options=None
+2025-08-27 15:17:57,011 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107cc97f0>
+2025-08-27 15:17:57,011 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x107cd1c50> server_hostname='22ebc1c4fb3274abc1.gradio.live' timeout=None
+2025-08-27 15:17:57,384 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x107cca6f0>
+2025-08-27 15:17:57,384 - DEBUG - send_request_headers.started request=<Request [b'GET']>
+2025-08-27 15:17:57,385 - DEBUG - send_request_headers.complete
+2025-08-27 15:17:57,385 - DEBUG - send_request_body.started request=<Request [b'GET']>
+2025-08-27 15:17:57,385 - DEBUG - send_request_body.complete
+2025-08-27 15:17:57,385 - DEBUG - receive_response_headers.started request=<Request [b'GET']>
+2025-08-27 15:18:02,298 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Wed, 27 Aug 2025 13:18:02 GMT'), (b'Content-Type', b'text/event-stream; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Server', b'uvicorn')])
+2025-08-27 15:18:02,299 - INFO - HTTP Request: GET https://22ebc1c4fb3274abc1.gradio.live/gradio_api/queue/data?session_hash=7170af5b-5171-4bbf-b9a9-9ab24355445e "HTTP/1.1 200 OK"
+2025-08-27 15:18:02,299 - DEBUG - receive_response_body.started request=<Request [b'GET']>
