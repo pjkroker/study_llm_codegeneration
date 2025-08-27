@@ -16,8 +16,8 @@ MODEL_NAME="${1:-m-a-p/OpenCodeInterpreter-DS-6.7B}"
 if [ ! -d "$PROJECT_DIR" ]; then
   git clone https://github.com/OpenCodeInterpreter/OpenCodeInterpreter.git
 fi
-cd "$PROJECT_DIR"
-cd demo
+#cd "$PROJECT_DIR"
+#cd demo
 
 # ----------------------------
 # 2. Create conda environment
@@ -35,7 +35,8 @@ conda activate "$CONDA_ENV"
 # 4. Install Python dependencies
 # ----------------------------
 echo "Schritt 4"
-pip install -r requirements.txt
+pip install -r ../10_open_code_interpreter/requirements.txt
+
 
 # TODO check tmp environemt variable
 
