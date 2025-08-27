@@ -30,10 +30,11 @@ os.environ["GRADIO_TEMP_DIR"] = "~/tmp/gradio"
 os.environ["HF_TOKEN"] = "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" #TODO remove this!!
 from subproccess_helper import run_async
 # TODO fix paths
-proc = run_async("conda", ["run", "-n", "opencode", "python3", "./OpenCodeInterpreter/demo/chatbot.py",
-                           "--path", "m-a-p/OpenCodeInterpreter-DS-6.7B"])
+# proc = run_async("conda", ["run", "-n", "opencode", "python3", "./OpenCodeInterpreter/demo/chatbot.py",
+#                            "--path", "m-a-p/OpenCodeInterpreter-DS-6.7B"])
+#logging.info(f"Server started (PID:{proc.pid}")
 
-logging.info(f"Server started (PID:{proc.pid}")
+
 # Python continues running here...
 logging.info("---test server connection---")
 import time
@@ -130,3 +131,6 @@ if code:
 else:
     logging.info("No code found")
     print("❌ No Python code found in the response.")
+
+
+#TODO fix scirpt to start server and generate actual code
