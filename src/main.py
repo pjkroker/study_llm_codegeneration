@@ -23,6 +23,7 @@ result = run_shell(f"../10_open_code_interpreter/setup.sh", shell=True)
 logging.debug(result["stdout"])
 logging.debug(result["stderr"])
 logging.info("---start server---")
+os.environ["HF_TOKEN"] = "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" #TODO remove this!!
 from subproccess_helper import run_async
 # TODO fix paths
 proc = run_async("conda", ["run", "-n", "opencode", "python3", "./OpenCodeInterpreter/demo/chatbot.py",
