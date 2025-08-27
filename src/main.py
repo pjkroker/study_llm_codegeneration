@@ -19,7 +19,7 @@ logging.basicConfig(
 logging.debug("---Starting Setup---")
 logging.info("---10. OpenCodeInterpreter---")
 logging.info("---starting set up script---")
-result = run_shell(f"./setup.sh", shell=True)
+result = run_shell(f"../10_open_code_interpreter/setup.sh", shell=True)
 logging.debug(result["stdout"])
 logging.debug(result["sterr"])
 logging.info("---start server---")
