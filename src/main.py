@@ -29,6 +29,10 @@ logging.info("---starting set up script---")
 result = run_shell(f"../10_open_code_interpreter/setup.sh", shell=True)
 logging.debug(result["stdout"])
 logging.debug(result["stderr"])
+if(result["returncode"] != 0):
+    logging.debug(result["returncode"])
+    sys.exit(result["returncode"])
+
 
 logging.debug("--setting env variables and redirecting tmp directory (this might be platform dependent!--)")
 run_shell(f"mkdir -p ~/tmp/gradio ~/tmp/gradio", shell=True)
@@ -47,6 +51,8 @@ proc = run_async(
         "-lc",
         'source "$(conda info --base)/etc/profile.d/conda.sh" && '
         'conda activate opencode && '
+        'pip show gradio && '
+        'pip show torch && '
         'python3 ./OpenCodeInterpreter/demo/chatbot.py --path m-a-p/OpenCodeInterpreter-DS-6.7B'
     ],
     logfile=True,   # <-- enable logging to file
@@ -54,7 +60,7 @@ proc = run_async(
 ) # TODO close log file eventually?
 
 
-logging.info(f"Server started (PID:{proc.pid}")
+logging.info(f"Server started (PID:{proc.pid})")
 
 #proc = run_shell("conda run -n opencode pip show deepspeed", shell=True)
 #print(proc["stdout"])
