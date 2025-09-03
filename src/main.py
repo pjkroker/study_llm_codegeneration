@@ -16,6 +16,19 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     force=True
 )
+
+import sys
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('./out/log.txt', mode='w'),
+        logging.StreamHandler(sys.stdout)
+    ],
+    force=True
+)
+
+
 logging.debug("---Starting Setup---")
 logging.info("---10. OpenCodeInterpreter---")
 logging.info("---starting set up script---")
@@ -30,9 +43,18 @@ os.environ["GRADIO_TEMP_DIR"] = "~/tmp/gradio"
 os.environ["HF_TOKEN"] = "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" #TODO remove this!!
 from subproccess_helper import run_async
 # TODO fix paths
-# proc = run_async("conda", ["run", "-n", "opencode", "python3", "./OpenCodeInterpreter/demo/chatbot.py",
-#                            "--path", "m-a-p/OpenCodeInterpreter-DS-6.7B"])
-#logging.info(f"Server started (PID:{proc.pid}")
+proc = run_async(
+    "bash",
+    [
+        "-lc",
+        'source "$(conda info --base)/etc/profile.d/conda.sh" && conda activate opencode && python3 ./OpenCodeInterpreter/demo/chatbot.py --path m-a-p/OpenCodeInterpreter-DS-6.7B'
+    ],
+)
+
+logging.info(f"Server started (PID:{proc.pid}")
+
+#proc = run_shell("conda run -n opencode pip show deepspeed", shell=True)
+#print(proc["stdout"])
 
 
 # Python continues running here...
@@ -40,7 +62,7 @@ logging.info("---test server connection---")
 import time
 import requests
 
-URL = "http://127.0.0.1:7860/info"   # your server's health endpoint
+URL = "http://127.0.0.1:7860/config"   # your server's health endpoint
 EXPECTED_STATUS = 200                # wait until we get this
 TIMEOUT = 180                        # max seconds to wait
 SLEEP = 1                            # poll every 1 second
@@ -133,4 +155,16 @@ else:
     print("❌ No Python code found in the response.")
 
 
-#TODO fix scirpt to start server and generate actual code
+logging.info("killing server")
+
+# --- Terminate gracefully ---
+proc.terminate()   # sends SIGTERM
+try:
+    proc.wait(timeout=5)
+except subprocess.TimeoutExpired:
+    proc.kill()    # force kill with SIGKILL if not shutting down
+    proc.wait()
+
+rc = proc.wait(timeout=5)
+print("returncode:", rc) # -15 or -9 on Unix means killed by signal
+
