@@ -28,7 +28,7 @@ markdown-it-py==4.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
 multidict==6.6.4
-numpy==2.3.2
+numpy
 orjson==3.11.2
 packaging==25.0
 pandas==2.3.1
@@ -61,3 +61,7 @@ urllib3==2.5.0
 uvicorn==0.35.0
 websockets==15.0.1
 yarl==1.20.1
+torch
+transformers
+jupyter_client
+accelerate
