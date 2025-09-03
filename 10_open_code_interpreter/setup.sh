@@ -9,33 +9,40 @@ CONDA_ENV="opencode"
 PYTHON_VERSION="3.10"
 MODEL_NAME="${1:-m-a-p/OpenCodeInterpreter-DS-6.7B}"
 
-
+echo "set up script for OpenCodeGenerator"
 # ----------------------------
-# 1. Clone repository
+echo "1. Clone repository"
 # ----------------------------
 if [ ! -d "$PROJECT_DIR" ]; then
+  echo "no directoy $PROJECT_DIR found, cloning from github"
   git clone https://github.com/OpenCodeInterpreter/OpenCodeInterpreter.git
+else
+  echo "$PROJECT_DIR already exists"
 fi
-#cd "$PROJECT_DIR"
-#cd demo
 
 # ----------------------------
-# 2. Create conda environment
+echo "2. Create conda environment"
 # ----------------------------
 if ! conda env list | grep -q "$CONDA_ENV"; then
+  echo "no conda env $CONDA_ENV found, creating one"
   conda create -y -n "$CONDA_ENV" python=$PYTHON_VERSION
+else
+  echo "$CONDA_ENV already exists"
 fi
 
-# Activate environment
+# ----------------------------
+echo "3. Activate conda environment $CONDA_ENV"
+# ----------------------------
 # shellcheck disable=SC1091
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate "$CONDA_ENV"
 
 # ----------------------------
-# 4. Install Python dependencies
+echo "4. Install Python dependencies (modified to solve versions conflicts)"
 # ----------------------------
-echo "Schritt 4"
 pip install -r ../10_open_code_interpreter/req2.txt
+
+echo "end of set up script"
 
 
 # TODO check tmp environemt variable
