@@ -1,21 +1,16 @@
 import logging
 import os
-
-from subproccess_helper import run_shell
-
-#from docker_helper import DockerHelper
-#from subproccess_helper import run, run_shell
+from subproccess_helper import run, run_shell, run_async
+import time
+import requests
+import io
+from contextlib import redirect_stdout
+from gradio_client import Client
+import re
+import subprocess
 
 # Ensure the folder exists
 os.makedirs('./out', exist_ok=True)
-
-# Set up basic configuration for logging
-logging.basicConfig(
-    filename='./out/log.txt',
-    level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    force=True
-)
 
 import sys
 logging.basicConfig(
@@ -29,38 +24,43 @@ logging.basicConfig(
 )
 
 
-logging.debug("---Starting Setup---")
 logging.info("---10. OpenCodeInterpreter---")
 logging.info("---starting set up script---")
 result = run_shell(f"../10_open_code_interpreter/setup.sh", shell=True)
 logging.debug(result["stdout"])
 logging.debug(result["stderr"])
-logging.info("---start server---")
 
+logging.debug("--setting env variables and redirecting tmp directory (this might be platform dependent!--)")
 run_shell(f"mkdir -p ~/tmp/gradio ~/tmp/gradio", shell=True)
+logging.debug(result["stdout"])
+logging.debug(result["stderr"])
 os.environ["TMPDIR"] = "~/tmp"
 os.environ["GRADIO_TEMP_DIR"] = "~/tmp/gradio"
 os.environ["HF_TOKEN"] = "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" #TODO remove this!!
-from subproccess_helper import run_async
+
+logging.info("---start server---")
 # TODO fix paths
+# TODO include server output
 proc = run_async(
     "bash",
     [
         "-lc",
-        'source "$(conda info --base)/etc/profile.d/conda.sh" && conda activate opencode && python3 ./OpenCodeInterpreter/demo/chatbot.py --path m-a-p/OpenCodeInterpreter-DS-6.7B'
+        'source "$(conda info --base)/etc/profile.d/conda.sh" && '
+        'conda activate opencode && '
+        'python3 ./OpenCodeInterpreter/demo/chatbot.py --path m-a-p/OpenCodeInterpreter-DS-6.7B'
     ],
-)
+    logfile=True,   # <-- enable logging to file
+    logfile_path="./out/chatbot_server.log"  # optional, customize log path
+) # TODO close log file eventually?
+
 
 logging.info(f"Server started (PID:{proc.pid}")
 
 #proc = run_shell("conda run -n opencode pip show deepspeed", shell=True)
 #print(proc["stdout"])
 
+logging.info("wait for server")
 
-# Python continues running here...
-logging.info("---test server connection---")
-import time
-import requests
 
 URL = "http://127.0.0.1:7860/config"   # your server's health endpoint
 EXPECTED_STATUS = 200                # wait until we get this
@@ -72,12 +72,12 @@ while True:
     try:
         resp = requests.get(URL, timeout=2)
         if resp.status_code == EXPECTED_STATUS:
-            print("✅ Server is ready!")
+            logging.info("Server is ready!")
             break
         else:
-            print(f"Got {resp.status_code}, waiting...")
+            logging.debug(f"Got {resp.status_code}, waiting...")
     except requests.RequestException as e:
-        print(f"Connection failed: {e}, retrying...")
+        logging.info(f"Connection failed: {e}, retrying...")
 
     if time.time() - start > TIMEOUT:
         raise TimeoutError(f"Server did not reach {EXPECTED_STATUS} within {TIMEOUT}s")
@@ -91,11 +91,8 @@ while True:
 # stdout, stderr = proc.communicate()
 # logging.debug(stdout)
 # logging.debug(stderr)
-import io
-import logging
-from contextlib import redirect_stdout
-from gradio_client import Client
 
+logging.info("---test server connection---")
 client = Client("http://127.0.0.1:7860")
 
 buf = io.StringIO()
@@ -104,7 +101,14 @@ with redirect_stdout(buf):
 
 logging.info("Gradio API Info:\n%s", buf.getvalue())
 
-logging.info("generating code")
+logging.info("---generating code---")
+# Example usage with your given response:
+# response = [
+#     ['Give me a program that computes the first 100 prime numbers',
+#      'Here is a Python program that computes the first 100 prime numbers:\n\n```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef get_primes(count):\n    primes = []\n    num = 2\n    while len(primes) < count:\n        if is_prime(num):\n            primes.append(num)\n        num += 1\n    return primes\n\nprimes = get_primes(100)\nprint(primes)\n```\n\nThis program uses a helper function `is_prime()` to check if a number is prime. It then uses another function `get_primes()` to generate the first 100 prime numbers. The `get_primes()` function uses a while loop to keep generating prime numbers until it has found the desired number of primes. Finally, it prints the list of the first 100 prime numbers.'],
+#     ['Execution result: \n[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541]',
+#      'The first 100 prime numbers are:\n\n[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541]\n\nThese numbers are generated by the program using the `is_prime()` function to check if each number is prime. The `get_primes()` function keeps generating prime numbers until it has found the desired number of primes.']
+# ]
 result = client.predict(
 		user_message="Give me a program that computes the first 100 prime numbers",
 		api_name="/partial"
@@ -112,7 +116,7 @@ result = client.predict(
 logging.info("code generated successfully")
 logging.info(result)
 
-import re
+logging.info("extract python code and save it to disk")
 
 def extract_python_code(text: str) -> str:
     """
@@ -130,15 +134,8 @@ def save_code_to_file(code: str, filename: str = "output.py"):
     """
     with open(filename, "w", encoding="utf-8") as f:
         f.write(code)
-    print(f"✅ Code saved to {filename}")
+    print(f"Code saved to {filename}")
 
-# Example usage with your given response:
-# response = [
-#     ['Give me a program that computes the first 100 prime numbers',
-#      'Here is a Python program that computes the first 100 prime numbers:\n\n```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef get_primes(count):\n    primes = []\n    num = 2\n    while len(primes) < count:\n        if is_prime(num):\n            primes.append(num)\n        num += 1\n    return primes\n\nprimes = get_primes(100)\nprint(primes)\n```\n\nThis program uses a helper function `is_prime()` to check if a number is prime. It then uses another function `get_primes()` to generate the first 100 prime numbers. The `get_primes()` function uses a while loop to keep generating prime numbers until it has found the desired number of primes. Finally, it prints the list of the first 100 prime numbers.'],
-#     ['Execution result: \n[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541]',
-#      'The first 100 prime numbers are:\n\n[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541]\n\nThese numbers are generated by the program using the `is_prime()` function to check if each number is prime. The `get_primes()` function keeps generating prime numbers until it has found the desired number of primes.']
-# ]
 
 # Flatten response into a single string
 response_text = " ".join(sum(result, []))
@@ -151,11 +148,10 @@ if code:
     logging.info(code)
     logging.info("Code saved to primes.py")
 else:
-    logging.info("No code found")
-    print("❌ No Python code found in the response.")
+    logging.info("No Python code found in the response.")
 
 
-logging.info("killing server")
+logging.info("---killing server---")
 
 # --- Terminate gracefully ---
 proc.terminate()   # sends SIGTERM
@@ -166,5 +162,5 @@ except subprocess.TimeoutExpired:
     proc.wait()
 
 rc = proc.wait(timeout=5)
-print("returncode:", rc) # -15 or -9 on Unix means killed by signal
+logging.debug(f"returncode: {rc} (-15 or -9 on Unix means killed by signal)")
 
