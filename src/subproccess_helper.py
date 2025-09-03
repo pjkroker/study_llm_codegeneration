@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def run(command, args):
     """
@@ -56,7 +57,7 @@ def run_shell(command, shell=False):
         "pid": proc.pid
     }
 
-def run_async(command, args):
+def run_async2(command, args):
     """
     Launches a subprocess asynchronously (non-blocking).
     Returns the Popen object so the caller can manage it.
@@ -67,4 +68,33 @@ def run_async(command, args):
         stderr=subprocess.PIPE,
         text=True
     )
+    return proc
+
+
+def run_async(command, args, logfile=False, logfile_path="./out/subprocess.log"):
+    """
+    Launches a subprocess asynchronously (non-blocking).
+    If logfile=True, all output is written directly to logfile_path.
+    Otherwise, stdout/stderr are piped.
+    """
+    if logfile:
+        os.makedirs(os.path.dirname(logfile_path), exist_ok=True)
+        f = open(logfile_path, "a", buffering=1)  # line-buffered
+        proc = subprocess.Popen(
+            [command] + args,
+            stdout=f,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1
+        )
+        # keep file handle on proc so caller can close later if desired
+        proc.logfile = f
+    else:
+        proc = subprocess.Popen(
+            [command] + args,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            bufsize=1
+        )
     return proc
