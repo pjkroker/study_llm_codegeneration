@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -53,3 +53,4 @@ RUN unzip codecontests_valid_and_test_processed_alpha_codium.zip \
 # copy config files
 COPY .secrets.toml alpha_codium/settings/
 COPY configuration.toml alpha_codium/settings/
+

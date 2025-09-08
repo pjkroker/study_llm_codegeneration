@@ -6,4 +6,5 @@ set -euo pipefail
 # ----------------------------
 
 echo "Building Docker Container"
-docker build -f dockerfile --platform=linux/amd64 -t alpha-codium-ubuntu .
+pwd
+docker build -f ./study_llm_codegeneration/codegen_09_alpha_codium/dockerfile --platform=linux/amd64 -t codegen_study-alpha_codium ./study_llm_codegeneration/codegen_09_alpha_codium/
