@@ -2,6 +2,12 @@
 set -euo pipefail
 
 # ----------------------------
+# Resolve the directory this script lives in (absolute)
+# ----------------------------
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd -P)"
+cd "$SCRIPT_DIR"
+
+# ----------------------------
 # Config
 # ----------------------------
 PROJECT_DIR="OpenCodeInterpreter"
@@ -40,7 +46,7 @@ conda activate "$CONDA_ENV"
 # ----------------------------
 echo "4. Install Python dependencies (modified to solve versions conflicts)"
 # ----------------------------
-pip install -r ../10_open_code_interpreter/req2.txt
+pip install -r req2.txt
 
 echo "end of set up script"
 
