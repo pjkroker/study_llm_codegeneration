@@ -3,6 +3,8 @@ import docker
 import os
 import sys
 import json
+import tarfile
+import io
 from pathlib import Path
 
 logging.basicConfig(
@@ -16,6 +18,7 @@ class DockerHelper:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.client = docker.from_env()
         self.logger.info("Docker client initialized")
+        self.container = None
     
 
     #TODO test it 
@@ -54,7 +57,7 @@ class DockerHelper:
                     self.logger.info(chunk["stream"].rstrip())
                 if "error" in chunk:
                     self.logger.error(chunk["error"].rstrip())
-
+    #TODO testing
     def run_container(self, image, command, host_volume_path, guest_volume_path):
 
         container = self.client.containers.run(
@@ -72,18 +75,75 @@ class DockerHelper:
             stdout=True,  # capture stdout
             stderr=True,
         )
+        self.container = container
         return container
     
-    #TODO test it
-    def exec(self, container, cmd, workdir=None, use_bash=True):
-        if not container:
+    #TODO testing
+    def exec(self, cmd):
+        if self.container is None:
             raise RuntimeError("No container running")
-        return self.container.exec_run(["bash", "-lc", cmd], stdout=True, stderr=True, demux=True)
 
-    #TODO test it
-    def stop_container(self, container, *, remove=True):
+        result = self.container.exec_run(["bash", "-lc", cmd], stdout=True, stderr=True, demux=True)
+        out_b, err_b = (result.output or (b"", b""))  # ensure it's always a tuple
+        #out_b, err_b = result.output if result.output else (b"", b"")
+
+        # decode safely
+        out = out_b.decode(errors="replace") if out_b else ""
+        err = err_b.decode(errors="replace") if err_b else ""
+
+        #out = out_b.decode(errors="replace")
+        #err = err_b.decode(errors="replace")
+
+
+        log = True
+        if log:
+            if out:
+                self.logger.info(out.strip())
+            if err:
+                self.logger.warning(err.strip())
+                
+        return  {
+            "cmd": cmd,
+            "exit_code": result.exit_code,
+            "stdout": out,
+            "stderr": err,
+        }
+
+
+    #TODO testing
+    def stop_container(self, remove=True):
         """Cleanup helper."""
         try:
-            container.remove(force=True) if remove else container.stop()
+            self.container.remove(force=True) if remove else self.container.stop()
         except Exception:
             pass
+    
+
+
+    def copy_file_from_container(self, container_path: str, host_path: str):
+        """
+        Copy a single file from inside the container to the host machine.
+        
+        :param container_path: Full path to the file inside the container (e.g., /app/logs/output.log)
+        :param host_path: Destination path on the host (e.g., ./local_logs/output.log)
+        """
+        if not self.container:
+            raise RuntimeError("No container running")
+        
+        # 1. Get the file as a tar archive from the container
+        stream, _ = self.container.get_archive(container_path)
+
+        # 2. Open the tar stream
+        tar_bytes = io.BytesIO()
+        for chunk in stream:
+            tar_bytes.write(chunk)
+        tar_bytes.seek(0)
+
+        with tarfile.open(fileobj=tar_bytes) as tar:
+            member = tar.getmembers()[0]
+            with tar.extractfile(member) as file_content:
+                with open(host_path, "wb") as f:
+                    f.write(file_content.read())
+
+        self.logger.info(f"Copied {container_path} to {host_path}")
+
