@@ -4,6 +4,7 @@ from study_llm_codegeneration.helpers.subproccess_helper import run, run_shell, 
 import time
 import requests
 import io
+from dotenv import load_dotenv, find_dotenv
 from contextlib import redirect_stdout
 from gradio_client import Client
 import re
@@ -50,8 +51,9 @@ def main():
     logging.debug(result["stdout"])
     logging.debug(result["stderr"])
     os.environ["TMPDIR"] = "~/tmp"
-    os.environ["GRADIO_TEMP_DIR"] = "~/tmp/gradio"
-    os.environ["HF_TOKEN"] = "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" #TODO remove this!!
+    os.environ["GRADIO_TEMP_DIR"] = "~/tmp/gradio" #TODO check if this is really necessary
+    #os.environ["HF_TOKEN"] = "hf_..."
+    load_dotenv(find_dotenv())
 
     logging.info("---start server---")
     # TODO fix paths

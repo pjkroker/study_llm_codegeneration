@@ -33,7 +33,6 @@ key = "..."
 ### 10. Open Code Generator
 (1) Braucht eine lokale Nvidia GPU.
 
---- NOCH ist mein Token fest im Code---
 
 (2) Duplicate the file `env.template`, rename it as `.env`, and fill in your HF API key:
 ```

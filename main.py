@@ -1,8 +1,10 @@
 from study_llm_codegeneration.codegen_09_alpha_codium.main import main as ac
 from study_llm_codegeneration.codegen_10_open_code_interpreter.main import main as chatbot
+from dotenv import load_dotenv, find_dotenv
 
 
 def main():
+    load_dotenv(find_dotenv())
     print("helloworld")
     ac()
     #chatbot()
