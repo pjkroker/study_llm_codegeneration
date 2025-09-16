@@ -39,11 +39,12 @@ key = "..."
 ```
 HF_TOKEN=hf_xxx...
 ```
-## Start 
-Make sure your working direcotry is set correctly, the venv is activated. Then you can run the file via the package function:
+## Run the applications
+Make sure the venv is activated and you are in the project root directory (where study_llm_codegeneration/ lives).
+You should not cd into subfolders to run the code — instead use Python’s module execution (-m).
 ```bash
 source ./venv/bin/activate
 cd ..
-python -m study_llm_codegeneration.codegen_09_alpha_codium.
+python -m study_llm_codegeneration.codegen_09_alpha_codium.main
 python -m study_llm_codegeneration.codegen_10_open_code_interpreter.main
 ```
