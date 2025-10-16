@@ -1,0 +1,56 @@
+FROM --platform=linux/amd64 ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install common tools, including rust
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    unzip \
+    vim \
+    wget \
+    nano \
+    net-tools \
+    iputils-ping \
+    dnsutils \
+    build-essential \
+    cargo \
+    rustc \
+    software-properties-common \
+    python3.10 \
+    python3.10-venv \
+    python3.10-dev \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN ln -s /usr/bin/python3.10 /usr/bin/python
+
+# Set working dir
+WORKDIR /app
+
+# Clone repo
+RUN git clone https://github.com/Codium-ai/AlphaCodium.git .
+
+# Copy requirements
+COPY requirements.txt .
+
+# Clone data
+RUN wget https://huggingface.co/datasets/talrid/CodeContests_valid_and_test_AlphaCodium/resolve/main/codecontests_valid_and_test_processed_alpha_codium.zip
+
+# Install AlphaCodium
+# Install pip requirements
+RUN python3.10 -m venv /app/venv
+# Upgrade pip inside the venv and install dependencies
+RUN /app/venv/bin/pip install --upgrade pip \
+ && /app/venv/bin/pip install -r requirements.txt
+
+# Unzip data
+RUN unzip codecontests_valid_and_test_processed_alpha_codium.zip \
+    && rm codecontests_valid_and_test_processed_alpha_codium.zip
+
+# Add a build argument for cache busting
+ARG CACHEBUST=1
+# Copy config files
+COPY .secrets.toml alpha_codium/settings/
+COPY configuration.toml alpha_codium/settings/
+COPY ai_handler.py alpha_codium/llm/
