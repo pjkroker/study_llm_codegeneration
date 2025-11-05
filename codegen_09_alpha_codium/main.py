@@ -5,6 +5,7 @@ import docker
 
 from study_llm_codegeneration.helpers.docker_helper import DockerHelper
 from study_llm_codegeneration.helpers.subproccess_helper import run_shell
+from study_llm_codegeneration.codegen_09_alpha_codium.alphacodium_container import AlphaCodiumContainer
 
 
 def main():
@@ -25,23 +26,24 @@ def main():
         force=True
     )
     logging.info("---9. Alpha Codium---")
-    logging.info("---Building Docker Container using Shell Script---")
-    result = run_shell(f"{SETUP_PATH}", shell=True)
-    logging.debug(result["stdout"])
-    logging.debug(result["stderr"])
-    if(result["returncode"] != 0):
-        logging.debug(result["returncode"])
-        sys.exit(result["returncode"])
+    # logging.info("---Building Docker Container using Shell Script---")
+    # result = run_shell(f"{SETUP_PATH}", shell=True)
+    # logging.debug(result["stdout"])
+    # logging.debug(result["stderr"])
+    # if(result["returncode"] != 0):
+    #     logging.debug(result["returncode"])
+    #     sys.exit(result["returncode"])
 
-    logging.info("---Running Docker Container ---")
-    IMAGE_TAG = "codegen_study-alpha_codium"
-    COMMAND = "sleep infinity"
-    HOST_VOLUME_PATH = "/Users/paul/paul_data/projects_cs/study_llm_codegeneration/codegen_09_alpha_codium/out"
-    GUEST_VOLUME_PATH = "/data"
-    #create helper
-    cntr_alpha_codium = DockerHelper()
-    cntr_alpha_codium.run_container(IMAGE_TAG, COMMAND, HOST_VOLUME_PATH, GUEST_VOLUME_PATH)
-    cntr_alpha_codium.exec("pwd")
+    # logging.info("---Running Docker Container ---")
+    # IMAGE_TAG = "codegen_study-alpha_codium"
+    # COMMAND = "sleep infinity"
+    # HOST_VOLUME_PATH = "/Users/paul/paul_data/projects_cs/study_llm_codegeneration/codegen_09_alpha_codium/out"
+    # GUEST_VOLUME_PATH = "/data"
+    # #create helper
+    # cntr_alpha_codium = DockerHelper()
+    # cntr_alpha_codium.run_container(IMAGE_TAG, COMMAND, HOST_VOLUME_PATH, GUEST_VOLUME_PATH)
+    # cntr_alpha_codium.exec("pwd")
+    cntr_alpha_codium = AlphaCodiumContainer(SETUP_PATH, "ollama")
     logging.debug("---Testing Ollama Connection---")
     cntr_alpha_codium.exec("curl http://host.docker.internal:11434/v1/models")
     cntr_alpha_codium.exec('curl -X POST http://host.docker.internal:11434/api/generate  -d \'{"model":"llama2:latest","prompt":"Say hi!"}\'')
@@ -63,8 +65,8 @@ def main():
     cntr_alpha_codium.exec("printenv")
     logging.info("test")
     
-    cntr_alpha_codium.exec(cmd_entire_dataset)
-    cntr_alpha_codium.copy_file_from_container("/app/example.log", os.path.join(OUT_DIR, "log_alpha_codium.txt"))
+    #cntr_alpha_codium.exec(cmd_entire_dataset)
+    #cntr_alpha_codium.copy_file_from_container("/app/example.log", os.path.join(OUT_DIR, "log_alpha_codium.txt"))
     cntr_alpha_codium.stop_container()
     
 
