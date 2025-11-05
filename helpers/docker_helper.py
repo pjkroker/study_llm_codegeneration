@@ -69,6 +69,7 @@ class DockerHelper:
                     "mode": "rw"
                 }
             },
+            extra_hosts={"host.docker.internal": "host-gateway"},
             tty=True,
             stdin_open=True,
             detach=True,
