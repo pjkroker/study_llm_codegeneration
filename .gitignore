@@ -1,5 +1,5 @@
 **/.env
-**/configuration.toml
+#**/configuration.toml
 **/.secrets.toml
 **/venv
 **/.venv
