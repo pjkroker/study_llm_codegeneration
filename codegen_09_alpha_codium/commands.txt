@@ -4,3 +4,12 @@ docker run -it --platform=linux/amd64 alpha-codium-ubuntu bash
 
 source ./venv/bin/activate
 python -m alpha_codium.solve_problem --dataset_name /app/valid_and_test_processed --split_name test --problem_number 0
+
+
+
+curl -X POST http://host.docker.internal:11434/api/generate \
+  -H "Content-Type: application/json" \
+  -d '{"model":"llama2:latest","prompt":"Say hi","stream":false,"options":{"num_predict":64}}'
+
+
+ssh -L 11434:localhost:11434 krokerpa@gruenau1.informatik.hu-berlin.de

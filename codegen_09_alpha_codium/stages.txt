@@ -1,0 +1,29 @@
+---Pre-processing---
+1. --reflection stage--
+2. --generate possible solutions stage--
+3. --choose best solution stage-- (rank in the paper)
+4. --generate ai tests stage--
+
+---Code Iteration Stage---?
+--run initial code generation stage--
+5.--initial solve stage-- 9 mal?
+6. --iterate on public tests stage--
+7. --iterate on all ai tests stage--
+
+
+evaluating solution on public tests...
+evaluating solution on private tests...
+evaluating solution on generated tests...
+
+
+public tests:
+The tests that come with the dataset/problem statement (what a contestant would normally see).
+Good for sanity check, but usually not enough to guarantee correctness.
+
+private tests:
+Hidden tests that would be used in a real contest to catch corner cases.
+These are not always available in open datasets, so you often see 0 run/failed.
+
+generate tests:
+AI-generated test cases (AlphaCodium asks the LLM to imagine edge cases, tricky inputs, etc.).
+Very important for checking robustness of the solution.

@@ -78,10 +78,10 @@ class AiHandler:
                             request_timeout=15,
                             force_timeout=15,
                         )
-                        print("✅ Ollama responded:", response["choices"][0]["message"]["content"].strip())
+                        print("Ollama responded:", response["choices"][0]["message"]["content"].strip())
                         return True
                     except Exception as e:
-                        print("❌ Ollama check failed:", e)
+                        print("Ollama check failed:", e)
                         return False
 
                 # Run the async coroutine in a fresh event loop
