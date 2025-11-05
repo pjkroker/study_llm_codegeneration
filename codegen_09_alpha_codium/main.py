@@ -63,7 +63,7 @@ def main():
     cntr_alpha_codium.exec("printenv")
     logging.info("test")
     
-    cntr_alpha_codium.exec(cmd)
+    cntr_alpha_codium.exec(cmd_entire_dataset)
     cntr_alpha_codium.copy_file_from_container("/app/example.log", os.path.join(OUT_DIR, "log_alpha_codium.txt"))
     cntr_alpha_codium.stop_container()
     
